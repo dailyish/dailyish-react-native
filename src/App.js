@@ -1,5 +1,5 @@
 import React, { Fragment } from 'react';
-import Router from './Utils/Routes';
+import Router from './utils/Routes';
 
 const App = () => {
   return (
