@@ -16,7 +16,7 @@ const styles = StyleSheet.create({
 const DrawerContent = () => {
   return (
     <View style={styles.container}>
-      <Button title={Actions.currentScene} onPress={Actions.main} />
+      <Button title="Today" onPress={Actions.main} />
       <Button title="Habits" onPress={Actions.habits} />
     </View>
   );
