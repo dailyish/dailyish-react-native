@@ -1,4 +1,4 @@
-import { SafeAreaView, ScrollView, Button, TextInput } from 'react-native';
+import { SafeAreaView, ScrollView, Button, TextInput, Picker } from 'react-native';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -9,34 +9,39 @@ import { changeText } from '../redux/Forms';
 const propTypes = {
   actionAddHabit: PropTypes.func.isRequired,
   actionChangeText: PropTypes.func.isRequired,
-  formHabitName: PropTypes.string.isRequired
+  habitName: PropTypes.string.isRequired,
+  habitDay: PropTypes.string.isRequired
 };
 
 const defaultProps = {};
 
 class HabitAddView extends Component {
   onAdd() {
-    const { actionAddHabit, formHabitName } = this.props;
-    actionAddHabit({ name: formHabitName });
+    const { actionAddHabit, habitName } = this.props;
+    actionAddHabit({ name: habitName });
     Actions.pop();
   }
 
-  onChange = habitName => {
-    const { actionChangeText } = this.props;
-    actionChangeText({ form: 'habitName', value: habitName });
-  };
-
   render() {
-    const { formHabitName } = this.props;
+    const { habitName, habitDay, actionChangeText } = this.props;
+    const days = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
     return (
       <SafeAreaView>
         <ScrollView contentInsetAdjustmentBehavior="automatic">
           <TextInput
             label="Name"
             placeholder="Add Habit"
-            value={formHabitName}
-            onChangeText={habitName => this.onChange(habitName)}
+            value={habitName}
+            onChangeText={value => actionChangeText({ form: 'habitName', value })}
           />
+          <Picker
+            selectedValue={habitDay}
+            onValueChange={value => actionChangeText({ form: 'habitDay', value })}
+          >
+            {days.map(day => (
+              <Picker.Item label={day} value={day} />
+            ))}
+          </Picker>
           <Button title="Add" onPress={() => this.onAdd()} />
         </ScrollView>
       </SafeAreaView>
@@ -49,7 +54,8 @@ const mapStateToProps = state => {
   const { habits, forms } = state;
   return {
     habits: Object.values(habits),
-    formHabitName: forms.habitName
+    habitName: forms.habitName,
+    habitDay: forms.habitDay
   };
 };
 
