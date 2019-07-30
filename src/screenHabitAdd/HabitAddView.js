@@ -4,11 +4,11 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { Actions } from 'react-native-router-flux';
 import { addHabit } from '../redux/Habits';
-import { changeHabitName } from '../redux/Forms';
+import { changeText } from '../redux/Forms';
 
 const propTypes = {
   actionAddHabit: PropTypes.func.isRequired,
-  actionChangeHabitName: PropTypes.func.isRequired,
+  actionChangeText: PropTypes.func.isRequired,
   formHabitName: PropTypes.string.isRequired
 };
 
@@ -22,8 +22,8 @@ class HabitAddView extends Component {
   }
 
   onChange = habitName => {
-    const { actionChangeHabitName } = this.props;
-    actionChangeHabitName(habitName);
+    const { actionChangeText } = this.props;
+    actionChangeText({ form: 'habitName', value: habitName });
   };
 
   render() {
@@ -47,7 +47,6 @@ class HabitAddView extends Component {
 // note that this converts the object into an array for mapping
 const mapStateToProps = state => {
   const { habits, forms } = state;
-  console.log(forms);
   return {
     habits: Object.values(habits),
     formHabitName: forms.habitName
@@ -56,7 +55,7 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { actionAddHabit: addHabit, actionChangeHabitName: changeHabitName }
+  { actionAddHabit: addHabit, actionChangeText: changeText }
 )(HabitAddView);
 
 HabitAddView.propTypes = propTypes;

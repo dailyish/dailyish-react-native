@@ -1,5 +1,5 @@
 // Enter actions here
-const CHANGE_HABIT_NAME = 'change_habit_name';
+const CHANGE_TEXT = 'change_text';
 
 // Set initial state
 const INITIAL_STATE = { habitName: '' };
@@ -7,11 +7,11 @@ const INITIAL_STATE = { habitName: '' };
 // Reducer - must be export default function reducer
 export default function reducer(state = INITIAL_STATE, action) {
   switch (action.type) {
-    case CHANGE_HABIT_NAME:
+    case CHANGE_TEXT:
       // make new object - you can't keep the old
       return {
         ...state,
-        habitName: action.payload
+        [action.payload.form]: action.payload.value
       };
     default:
       return state;
@@ -19,9 +19,9 @@ export default function reducer(state = INITIAL_STATE, action) {
 }
 
 // Action Creators
-export function changeHabitName(payload) {
+export function changeText(payload) {
   return {
-    type: CHANGE_HABIT_NAME,
+    type: CHANGE_TEXT,
     payload
   };
 }
