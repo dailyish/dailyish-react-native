@@ -1,4 +1,4 @@
-import { users } from '../Firebase';
+import { habits } from '../Firebase';
 
 // Enter actions here
 const ADD_HABIT = 'add_deck';
@@ -26,11 +26,8 @@ export default function reducer(state = INITIAL_STATE, action) {
 // Action Creators
 export const addHabit = ({ name }) => {
   // use firebase.auth to get current user
-  const currentUser = 'RlI8d22aHgR2yZWgx9sb';
   return () => {
-    users
-      .doc(currentUser)
-      .collection('habits')
+    habits
       .get()
       .then(snapshot => {
         snapshot.forEach(doc => {
