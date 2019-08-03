@@ -1,4 +1,4 @@
-import { SafeAreaView, ScrollView, Button, TextInput, Picker } from 'react-native';
+import { SafeAreaView, ScrollView, Button, TextInput, Picker, Text } from 'react-native';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -9,17 +9,18 @@ import { changeText } from '../redux/Forms';
 const propTypes = {
   actionAddHabit: PropTypes.func.isRequired,
   actionChangeText: PropTypes.func.isRequired,
-  habitName: PropTypes.string.isRequired,
-  habitDay: PropTypes.string.isRequired
+  habitName: PropTypes.string,
+  habitDay: PropTypes.string
 };
 
-const defaultProps = {};
+const defaultProps = { habitName: '', habitDay: 'Tuesday' };
 
 class HabitAddView extends Component {
   onAdd() {
-    const { actionAddHabit, habitName } = this.props;
-    actionAddHabit({ name: habitName });
+    const { actionAddHabit, actionChangeText, habitName, habitDay } = this.props;
+    actionAddHabit({ name: habitName, day: habitDay });
     Actions.pop();
+    actionChangeText({ form: 'habitName', value: defaultProps.habitName });
   }
 
   render() {
@@ -34,12 +35,13 @@ class HabitAddView extends Component {
             value={habitName}
             onChangeText={value => actionChangeText({ form: 'habitName', value })}
           />
+          <Text>Day of week</Text>
           <Picker
             selectedValue={habitDay}
             onValueChange={value => actionChangeText({ form: 'habitDay', value })}
           >
             {days.map(day => (
-              <Picker.Item label={day} value={day} />
+              <Picker.Item label={day} value={day} key={day} />
             ))}
           </Picker>
           <Button title="Add" onPress={() => this.onAdd()} />
