@@ -2,17 +2,27 @@ import { Text, View } from 'react-native';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { fetchHabits } from '../redux/Habits';
 
 const propTypes = {
-  habits: PropTypes.arrayOf(PropTypes.object).isRequired
+  habits: PropTypes.arrayOf(PropTypes.object).isRequired,
+  actionFetchHabits: PropTypes.func.isRequired
 };
 
 const defaultProps = {};
 
 class HabitsScreen extends Component {
+  componentWillMount() {
+    const { actionFetchHabits } = this.props;
+    actionFetchHabits();
+  }
+
   renderHabits() {
     const { habits } = this.props;
-    return habits.map(habit => <Text key={habit.name}>{habit.name}</Text>);
+    if (habits.length) {
+      return habits.map(habit => <Text key={habit.name}>{habit.name}</Text>);
+    }
+    return false;
   }
 
   render() {
@@ -24,13 +34,13 @@ class HabitsScreen extends Component {
 const mapStateToProps = state => {
   const { habits } = state;
   return {
-    habits: Object.values(habits)
+    habits
   };
 };
 
 export default connect(
   mapStateToProps,
-  {}
+  { actionFetchHabits: fetchHabits }
 )(HabitsScreen);
 
 HabitsScreen.propTypes = propTypes;

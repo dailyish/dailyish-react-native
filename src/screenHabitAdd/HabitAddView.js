@@ -2,7 +2,7 @@ import { SafeAreaView, ScrollView, Button, TextInput, Picker, Text } from 'react
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { Actions } from 'react-native-router-flux';
+
 import { addHabit } from '../redux/Habits';
 import { changeText } from '../redux/Forms';
 
@@ -19,7 +19,6 @@ class HabitAddView extends Component {
   onAdd() {
     const { actionAddHabit, actionChangeText, habitName, habitDay } = this.props;
     actionAddHabit({ name: habitName, day: habitDay });
-    Actions.pop();
     actionChangeText({ form: 'habitName', value: defaultProps.habitName });
   }
 

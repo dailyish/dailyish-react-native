@@ -1,10 +1,12 @@
+import { Actions } from 'react-native-router-flux';
 import { habits } from '../Firebase';
 
 // Enter actions here
-const ADD_HABIT = 'add_deck';
+const ADD_HABIT = 'add_habit';
+const FETCH_HABIT_SUCCESS = 'fetch_habit_success';
 
 // Set initial state
-const INITIAL_STATE = { meditate: { name: 'meditate', day: 'Monday' } };
+const INITIAL_STATE = [];
 
 // Reducer - must be export default function reducer
 export default function reducer(state = INITIAL_STATE, action) {
@@ -18,6 +20,8 @@ export default function reducer(state = INITIAL_STATE, action) {
           day: action.payload.day
         }
       };
+    case FETCH_HABIT_SUCCESS:
+      return action.payload;
     default:
       return state;
   }
@@ -28,11 +32,23 @@ export const addHabit = ({ name }) => {
   // use firebase.auth to get current user
   return () => {
     habits
+      .doc(name)
+      .set({ name })
+      .then(Actions.pop());
+  };
+};
+
+export const fetchHabits = () => {
+  // use firebase.auth to get current user
+  return dispatch => {
+    habits
       .get()
       .then(snapshot => {
-        snapshot.forEach(doc => {
-          alert(doc.id, '=>', doc.data());
-        });
+        if (snapshot.empty) {
+          console.log('No matching documents.');
+          return;
+        }
+        dispatch({ type: FETCH_HABIT_SUCCESS, payload: snapshot.docs.map(doc => doc.data()) });
       })
       .catch(err => {
         console.log('Error getting documents', err);
