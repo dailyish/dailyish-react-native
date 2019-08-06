@@ -12,7 +12,7 @@ const propTypes = {
 const defaultProps = {};
 
 class HabitsScreen extends Component {
-  componentWillMount() {
+  componentDidMount() {
     const { actionFetchHabits } = this.props;
     actionFetchHabits();
   }

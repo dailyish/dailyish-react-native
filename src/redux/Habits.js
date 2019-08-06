@@ -38,20 +38,25 @@ export const addHabit = ({ name }) => {
   };
 };
 
+// You could do the below by parsing an object instead and mapping in mapStateToProps
 export const fetchHabits = () => {
   // use firebase.auth to get current user
   return dispatch => {
-    habits
-      .get()
-      .then(snapshot => {
-        if (snapshot.empty) {
-          console.log('No matching documents.');
-          return;
-        }
+    habits.onSnapshot(
+      snapshot => {
         dispatch({ type: FETCH_HABIT_SUCCESS, payload: snapshot.docs.map(doc => doc.data()) });
-      })
-      .catch(err => {
-        console.log('Error getting documents', err);
-      });
+      },
+      err => {}
+    );
+    // .onSnapshot(snapshot => {
+    //   if (snapshot.empty) {
+    //     console.log('No matching documents.');
+    //     return;
+    //   }
+    //   dispatch({ type: FETCH_HABIT_SUCCESS, payload: snapshot.docs.map(doc => doc.data()) });
+    // })
+    // .catch(err => {
+    //   console.log('Error getting documents', err);
+    // });
   };
 };
