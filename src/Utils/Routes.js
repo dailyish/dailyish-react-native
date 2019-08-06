@@ -1,10 +1,15 @@
 import React from 'react';
 import { Scene, Router, Drawer, Stack, Actions } from 'react-native-router-flux';
+import Icon from 'react-native-vector-icons/FontAwesome5';
 import TodayScreen from '../screenToday/TodayScreen';
 import TodayEditScreen from '../screenTodayEdit/TodayEditScreen';
 import HabitsScreen from '../screenHabits/HabitsScreen';
 import HabitAddScreen from '../screenHabitAdd/HabitAddScreen';
 import MainDrawer from '../navigation/MainDrawer';
+
+const imageIcon = () => {
+  return <Icon name="pencil-alt" onPress={() => Actions.todayEdit()} />;
+};
 
 const RouterComponent = () => {
   return (
@@ -21,10 +26,8 @@ const RouterComponent = () => {
             key="today"
             component={TodayScreen}
             title="Today"
-            rightTitle="Edit"
-            onRight={() => {
-              Actions.todayEdit();
-            }}
+            renderRightButton={imageIcon}
+            onRight={() => {}}
           />
           <Scene key="todayEdit" component={TodayEditScreen} title="Edit Today" back />
         </Stack>

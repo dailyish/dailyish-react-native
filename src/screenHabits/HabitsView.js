@@ -1,8 +1,9 @@
-import { Text, View } from 'react-native';
+import { FlatList, Text } from 'react-native';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { fetchHabits } from '../redux/Habits';
+import HabitInfo from './HabitInfo';
 
 const propTypes = {
   habits: PropTypes.arrayOf(PropTypes.object).isRequired,
@@ -17,16 +18,10 @@ class HabitsScreen extends Component {
     actionFetchHabits();
   }
 
-  renderHabits() {
-    const { habits } = this.props;
-    if (habits.length) {
-      return habits.map(habit => <Text key={habit.name}>{habit.name}</Text>);
-    }
-    return false;
-  }
-
   render() {
-    return <View>{this.renderHabits()}</View>;
+    const { habits } = this.props;
+    console.log(habits);
+    return <FlatList data={habits} renderItem={({ item }) => <HabitInfo habit={item} />} />;
   }
 }
 
