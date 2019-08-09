@@ -1,5 +1,5 @@
 import { Actions } from 'react-native-router-flux';
-import { habits } from '../Firebase';
+import { habits } from '../utils/Firebase';
 
 // Enter actions here
 const ADD_HABIT = 'add_habit';
@@ -32,7 +32,7 @@ export const addHabit = ({ name }) => {
   // use firebase.auth to get current user
   return () => {
     habits
-      .doc(name)
+      .doc()
       .set({ name })
       .then(Actions.pop());
   };
@@ -44,7 +44,14 @@ export const fetchHabits = () => {
   return dispatch => {
     habits.onSnapshot(
       snapshot => {
-        dispatch({ type: FETCH_HABIT_SUCCESS, payload: snapshot.docs.map(doc => doc.data()) });
+        dispatch({
+          type: FETCH_HABIT_SUCCESS,
+          payload: snapshot.docs.map(doc => {
+            const data = doc.data();
+            data.id = doc.id;
+            return data;
+          })
+        });
       },
       err => {}
     );

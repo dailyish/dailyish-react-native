@@ -5,6 +5,7 @@ import { Provider } from 'react-redux';
 import Router from './utils/Routes';
 import Reducers from './utils/Reducers';
 
+// TODO: Add createGlobalStyles
 const App = () => {
   return (
     <Provider store={createStore(Reducers, {}, applyMiddleware(ReduxThunk))}>
