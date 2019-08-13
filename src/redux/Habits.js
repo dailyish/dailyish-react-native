@@ -38,6 +38,16 @@ export const addHabit = ({ name, day }) => {
   };
 };
 
+export const deleteHabit = ({ id }) => {
+  // use firebase.auth to get current user
+  return () => {
+    habits
+      .doc(id)
+      .delete()
+      .then(Actions.pop());
+  };
+};
+
 // You could do the below by parsing an object instead and mapping in mapStateToProps
 export const fetchHabits = () => {
   // use firebase.auth to get current user

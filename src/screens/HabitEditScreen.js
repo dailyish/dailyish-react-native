@@ -5,6 +5,7 @@ import PropTypes from 'prop-types';
 
 import { HabitSettings } from '../Containers';
 import { changeText } from '../redux/Forms';
+import { deleteHabit } from '../redux/Habits';
 
 // You wouldn't want to pass down the ID here as it will then update
 const propTypes = {
@@ -13,7 +14,8 @@ const propTypes = {
     id: PropTypes.string.isRequired,
     day: PropTypes.string.isRequired
   }).isRequired,
-  actionChangeText: PropTypes.func.isRequired
+  actionChangeText: PropTypes.func.isRequired,
+  actionDeleteHabit: PropTypes.func.isRequired
 };
 
 const defaultProps = {};
@@ -26,11 +28,19 @@ class HabitEditScreen extends Component {
     actionChangeText({ form: 'editHabitDay', value: day });
   }
 
+  onDelete() {
+    const { actionDeleteHabit, habit } = this.props;
+    const { id } = habit;
+    console.log(id);
+    actionDeleteHabit({ id });
+  }
+
   render() {
     return (
       <View>
         <HabitSettings reducer="edit" />
         <Button title="Save" />
+        <Button title="Delete" onPress={() => this.onDelete()} />
       </View>
     );
   }
@@ -46,7 +56,7 @@ const mapStateToProps = (state, ownProps) => {
 
 export default connect(
   mapStateToProps,
-  { actionChangeText: changeText }
+  { actionChangeText: changeText, actionDeleteHabit: deleteHabit }
 )(HabitEditScreen);
 
 HabitEditScreen.propTypes = propTypes;
