@@ -2,7 +2,7 @@
 const CHANGE_TEXT = 'change_text';
 
 // Set initial state
-const INITIAL_STATE = {};
+const INITIAL_STATE = { habitName: '', habitDay: 'Tuesday' };
 
 // Reducer - must be export default function reducer
 export default function reducer(state = INITIAL_STATE, action) {

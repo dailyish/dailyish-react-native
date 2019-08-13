@@ -28,12 +28,12 @@ export default function reducer(state = INITIAL_STATE, action) {
 }
 
 // Action Creators
-export const addHabit = ({ name }) => {
+export const addHabit = ({ name, day }) => {
   // use firebase.auth to get current user
   return () => {
     habits
       .doc()
-      .set({ name })
+      .set({ name, day })
       .then(Actions.pop());
   };
 };
@@ -55,15 +55,5 @@ export const fetchHabits = () => {
       },
       err => {}
     );
-    // .onSnapshot(snapshot => {
-    //   if (snapshot.empty) {
-    //     console.log('No matching documents.');
-    //     return;
-    //   }
-    //   dispatch({ type: FETCH_HABIT_SUCCESS, payload: snapshot.docs.map(doc => doc.data()) });
-    // })
-    // .catch(err => {
-    //   console.log('Error getting documents', err);
-    // });
   };
 };

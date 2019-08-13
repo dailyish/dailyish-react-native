@@ -1,9 +1,10 @@
 import React from 'react';
 import { Scene, Router, Drawer, Stack, Actions } from 'react-native-router-flux';
-import TodayScreen from '../screenToday/TodayScreen';
-import TodayEditScreen from '../screenTodayEdit/TodayEditScreen';
-import HabitsScreen from '../screenHabits/HabitsScreen';
-import HabitAddScreen from '../screenHabitAdd/HabitAddScreen';
+import TodayScreen from '../screens/today/TodayScreen';
+import TodayEditScreen from '../screens/todayEdit/TodayEditScreen';
+import HabitsScreen from '../screens/habits/HabitsScreen';
+import HabitAddScreen from '../screens/HabitAddScreen';
+import HabitEditScreen from '../screens/HabitEditScreen';
 import MainDrawer from '../navigation/MainDrawer';
 import { DARK_GREEN, WHITE } from '../Colors';
 import { NavIcon } from '../Components';
@@ -46,6 +47,7 @@ const RouterComponent = () => {
             }}
           />
           <Scene key="habitAdd" component={HabitAddScreen} title="Add Habit" back />
+          <Scene key="habitEdit" component={HabitEditScreen} title="Edit Habit" back />
         </Scene>
       </Drawer>
     </Router>
