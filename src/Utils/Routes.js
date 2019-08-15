@@ -28,7 +28,7 @@ const RouterComponent = () => {
       >
         <Stack key="main">
           <Scene
-            key="today"
+            key="Today"
             component={TodayScreen}
             title="Today"
             renderRightButton={<NavIcon name="pencil-alt" onPress={() => Actions.todayEdit()} />}
@@ -38,7 +38,7 @@ const RouterComponent = () => {
         </Stack>
         <Scene key="edits" initial cardStyle={{ backgroundColor: '#FFF' }}>
           <Scene
-            key="habits"
+            key="Habits"
             component={HabitsScreen}
             title="Habits"
             rightTitle="Add"

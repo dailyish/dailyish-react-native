@@ -1,24 +1,38 @@
 import React from 'react';
-import { StyleSheet, View, Button } from 'react-native';
 import { Actions } from 'react-native-router-flux';
+import styled from 'styled-components';
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    justifyContent: 'center',
-    alignItems: 'center',
-    backgroundColor: 'transparent',
-    borderWidth: 2,
-    borderColor: 'red'
+import { DrawerItem } from '../Components';
+
+const MainView = styled.View`
+  flex: 1;
+  margin-top: 60px;
+`;
+
+const drawerList = [
+  {
+    page: 'Today',
+    icon: 'calendar-day'
+  },
+  {
+    page: 'Habits',
+    icon: 'calendar-day'
   }
-});
+];
 
 const DrawerContent = () => {
   return (
-    <View style={styles.container}>
-      <Button title="Today" onPress={Actions.main} />
-      <Button title="Habits" onPress={Actions.habits} />
-    </View>
+    <MainView>
+      {drawerList.map(d => (
+        <DrawerItem
+          onPress={Actions[d.page]}
+          icon={d.icon}
+          page={d.page}
+          focused={d.page === Actions.currentScene}
+          key={d.page}
+        />
+      ))}
+    </MainView>
   );
 };
 
