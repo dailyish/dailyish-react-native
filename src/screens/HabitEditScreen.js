@@ -31,7 +31,6 @@ class HabitEditScreen extends Component {
   onDelete() {
     const { actionDeleteHabit, habit } = this.props;
     const { id } = habit;
-    console.log(id);
     actionDeleteHabit({ id });
   }
 
