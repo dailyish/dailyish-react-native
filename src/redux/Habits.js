@@ -2,7 +2,6 @@ import { Actions } from 'react-native-router-flux';
 import { habits } from '../utils/Firebase';
 
 // Enter actions here
-const ADD_HABIT = 'add_habit';
 const FETCH_HABIT_SUCCESS = 'fetch_habit_success';
 
 // Set initial state
@@ -11,15 +10,6 @@ const INITIAL_STATE = [];
 // Reducer - must be export default function reducer
 export default function reducer(state = INITIAL_STATE, action) {
   switch (action.type) {
-    case ADD_HABIT:
-      // make new object - you can't keep the old
-      return {
-        ...state,
-        [action.payload.name]: {
-          name: action.payload.name,
-          day: action.payload.day
-        }
-      };
     case FETCH_HABIT_SUCCESS:
       return action.payload;
     default:
@@ -34,6 +24,16 @@ export const addHabit = ({ name, day }) => {
     habits
       .doc()
       .set({ name, day })
+      .then(Actions.pop());
+  };
+};
+
+export const updateHabit = ({ id, name, day }) => {
+  // use firebase.auth to get current user
+  return () => {
+    habits
+      .doc(id)
+      .update({ name, day })
       .then(Actions.pop());
   };
 };

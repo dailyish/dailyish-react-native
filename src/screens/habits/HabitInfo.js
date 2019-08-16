@@ -4,8 +4,7 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Actions } from 'react-native-router-flux';
 
-const Container = styled.View`
-  flex: 1;
+const StyledView = styled.View`
   background-color: white;
   height: 56px;
   margin: 16px;
@@ -38,9 +37,9 @@ const HabitInfo = props => {
   const { name } = habit;
   return (
     <TouchableWithoutFeedback onPress={() => Actions.habitEdit({ habit })}>
-      <Container>
+      <StyledView>
         <MainText>{name}</MainText>
-      </Container>
+      </StyledView>
     </TouchableWithoutFeedback>
   );
 };

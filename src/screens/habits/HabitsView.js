@@ -16,7 +16,7 @@ const propTypes = {
 
 const defaultProps = {};
 
-// TODO: Really should have this fetched from the beginning maybe in App.js
+// TODO: Really should have this fetched from the beginning
 class HabitsScreen extends Component {
   componentDidMount() {
     const { actionFetchHabits } = this.props;
