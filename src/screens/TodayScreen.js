@@ -4,7 +4,8 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import { createStructuredSelector } from 'reselect';
 
-import HabitInfo from './habits/HabitInfo';
+import { HabitInfo } from '../Components';
+// TODO: this should not be run here it should be done on startup
 import { fetchHabits } from '../Actions';
 import { activeHabit } from '../Selectors';
 

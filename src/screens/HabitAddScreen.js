@@ -4,8 +4,7 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { HabitSettings } from '../Containers';
-import { changeText } from '../redux/Forms';
-import { addHabit } from '../Actions';
+import { addHabit, changeText } from '../Actions';
 
 // You wouldn't want to pass down the ID here as it will then update
 const propTypes = {
