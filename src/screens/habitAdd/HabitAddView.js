@@ -14,6 +14,8 @@ const propTypes = {
   habitDay: PropTypes.string
 };
 
+// TODO: Delete as not used
+
 const defaultProps = { habitName: '', habitDay: 'Tuesday' };
 
 class HabitAddView extends Component {

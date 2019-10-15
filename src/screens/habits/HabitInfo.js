@@ -4,9 +4,10 @@ import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import { Actions } from 'react-native-router-flux';
 
+// TODO: move this into it's own component
 const StyledView = styled.View`
   background-color: white;
-  height: 56px;
+  height: ${props => (props.expanded ? '200px' : '56px')};
   margin: 16px;
   margin-top: 0px;
   padding: 16px;
@@ -27,17 +28,18 @@ const propTypes = {
   habit: PropTypes.shape({
     name: PropTypes.string.isRequired,
     id: PropTypes.string.isRequired
-  }).isRequired
+  }).isRequired,
+  expanded: PropTypes.bool
 };
 
-const defaultProps = {};
+const defaultProps = { expanded: false };
 
 const HabitInfo = props => {
-  const { habit } = props;
+  const { habit, expanded } = props;
   const { name } = habit;
   return (
-    <TouchableWithoutFeedback onPress={() => Actions.habitEdit({ habit })}>
-      <StyledView>
+    <TouchableWithoutFeedback onPress={() => !expanded && Actions.habitEdit({ habit })}>
+      <StyledView expanded={expanded}>
         <MainText>{name}</MainText>
       </StyledView>
     </TouchableWithoutFeedback>

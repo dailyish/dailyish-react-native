@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { fetchHabits } from '../../redux/Habits';
+import { fetchHabits } from '../../Actions';
 import HabitInfo from './HabitInfo';
 
 const MainFlatList = styled.FlatList`
@@ -17,6 +17,7 @@ const propTypes = {
 const defaultProps = {};
 
 // TODO: Really should have this fetched from the beginning
+// TODO: Run from an array order with map
 class HabitsScreen extends Component {
   componentDidMount() {
     const { actionFetchHabits } = this.props;

@@ -1,10 +1,10 @@
 import { Actions } from 'react-native-router-flux';
 import { habits } from '../utils/Firebase';
 
-// Enter actions here
 const FETCH_HABIT_SUCCESS = 'fetch_habit_success';
 
 // Set initial state
+// TODO: this should really be an object of id: {id:id, name:name} to allow for easy searching
 const INITIAL_STATE = [];
 
 // Reducer - must be export default function reducer
@@ -17,7 +17,9 @@ export default function reducer(state = INITIAL_STATE, action) {
   }
 }
 
-// Action Creators
+// TODO: you may want to seperate this even further by doing operations as well
+// TODO: Operations are normally 1:1 with actions but can include chained thunks
+// You could do the below by parsing an object instead and mapping in mapStateToProps
 export const addHabit = ({ name, day }) => {
   // use firebase.auth to get current user
   return () => {

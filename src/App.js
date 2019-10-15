@@ -6,6 +6,7 @@ import Router from './utils/Routes';
 import Reducers from './utils/Reducers';
 
 // TODO: Add createGlobalStyles
+// TODO: Add themes for dark mode
 const App = () => {
   return (
     <Provider store={createStore(Reducers, {}, applyMiddleware(ReduxThunk))}>
