@@ -1,18 +1,21 @@
-import React, { Fragment } from 'react';
-import ReduxThunk from 'redux-thunk';
-import { createStore, applyMiddleware } from 'redux';
+import React from 'react';
 import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/lib/integration/react';
+import { persistStore } from 'redux-persist';
+
 import Router from './utils/Routes';
-import Reducers from './utils/Reducers';
+import store from './utils/Store';
 
 // TODO: Add createGlobalStyles
 // TODO: Add themes for dark mode
+// TODO: add loading={<LoadingView /> to PersistGate}
+// TODO: Change store={store}
 const App = () => {
   return (
-    <Provider store={createStore(Reducers, {}, applyMiddleware(ReduxThunk))}>
-      <Fragment>
+    <Provider store={store}>
+      <PersistGate persistor={persistStore(store)}>
         <Router />
-      </Fragment>
+      </PersistGate>
     </Provider>
   );
 };
