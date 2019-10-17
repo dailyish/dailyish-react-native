@@ -1,46 +1,54 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import styled from 'styled-components';
-import { fetchHabits } from '../Actions';
-import { HabitInfo } from '../Components';
+import SortableListView from 'react-native-sortable-listview';
 
-const MainFlatList = styled.FlatList`
-  margin-top: 16px;
-`;
+import { DraggableRow } from '../Components';
 
 const propTypes = {
-  habits: PropTypes.arrayOf(PropTypes.object).isRequired,
-  actionFetchHabits: PropTypes.func.isRequired
+  habitOrder: PropTypes.arrayOf(PropTypes.string).isRequired
+  // ,actionFetchHabits: PropTypes.func.isRequired
 };
 
 const defaultProps = {};
 
-// TODO: Really should have this fetched from the beginning
-// TODO: Run from an array order with map
 class HabitsScreen extends Component {
-  componentDidMount() {
-    const { actionFetchHabits } = this.props;
-    actionFetchHabits();
-  }
+  // componentDidMount() {
+  //   const { actionFetchHabits } = this.props;
+  //   actionFetchHabits();
+  // }
 
   render() {
-    const { habits } = this.props;
-    return <MainFlatList data={habits} renderItem={({ item }) => <HabitInfo habit={item} />} />;
+    const { habitOrder } = this.props;
+    const data = habitOrder.reduce((map, obj) => {
+      return { ...map, [obj]: obj };
+    }, {});
+    return (
+      <SortableListView
+        style={{ flex: 1 }}
+        data={data}
+        order={habitOrder}
+        onRowMoved={e => {
+          habitOrder.splice(e.to, 0, habitOrder.splice(e.from, 1)[0]);
+          this.forceUpdate();
+        }}
+        renderRow={row => <DraggableRow id={row} />}
+      />
+    );
   }
 }
 
 // note that this converts the object into an array for mapping
 const mapStateToProps = state => {
-  const { habits } = state;
+  const { habitOrder } = state;
   return {
-    habits
+    habitOrder
   };
 };
 
 export default connect(
-  mapStateToProps,
-  { actionFetchHabits: fetchHabits }
+  mapStateToProps
+  // ,{ actionFetchHabits: fetchHabits }
 )(HabitsScreen);
 
 HabitsScreen.propTypes = propTypes;

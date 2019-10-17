@@ -27,7 +27,7 @@ const DrawerContent = () => {
         <DrawerItem
           onPress={Actions[d.page]}
           icon={d.icon}
-          page={d.page}
+          pageName={d.page}
           focused={d.page === Actions.currentScene}
           key={d.page}
         />

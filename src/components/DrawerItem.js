@@ -1,4 +1,5 @@
 import React from 'react';
+import PropTypes from 'prop-types';
 import styled from 'styled-components';
 import Icon from 'react-native-vector-icons/FontAwesome5';
 
@@ -20,19 +21,24 @@ const StyledText = styled.Text`
 `;
 
 const DrawerItem = props => {
-  const { onPress, icon, page, focused } = props;
+  const { onPress, icon, pageName, focused } = props;
   const tabColor = focused ? TAB_FOCUSED : TAB;
   return (
     <ItemView onPress={onPress} disabled={focused}>
       <StyledTabIcon name={icon} color={tabColor} size={20} />
-      <StyledText color={tabColor}>{page}</StyledText>
+      <StyledText color={tabColor}>{pageName}</StyledText>
     </ItemView>
   );
 };
 
-const propTypes = {};
+const propTypes = {
+  icon: PropTypes.string.isRequired,
+  onPress: PropTypes.func.isRequired,
+  focused: PropTypes.bool,
+  pageName: PropTypes.string.isRequired
+};
 
-const defaultProps = {};
+const defaultProps = { focused: false };
 
 export default DrawerItem;
 

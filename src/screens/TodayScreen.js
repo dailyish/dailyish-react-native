@@ -2,47 +2,45 @@ import React, { Component } from 'react';
 import { View } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { createStructuredSelector } from 'reselect';
 
-import { HabitInfo } from '../Components';
+import { HabitInfoByID } from '../Containers';
 // TODO: this should not be run here it should be done on startup
-import { fetchHabits } from '../Actions';
-import { activeHabit } from '../Selectors';
+// import { fetchHabits } from '../Actions';
+import { selectActiveHabitID } from '../Selectors';
 
 // You wouldn't want to pass down the ID here as it will then update
 const propTypes = {
-  habit: PropTypes.shape({
-    name: PropTypes.string,
-    id: PropTypes.string
-  }),
-  actionFetchHabits: PropTypes.func.isRequired
+  activeHabitID: PropTypes.string
+  // ,actionFetchHabits: PropTypes.func.isRequired
 };
 
-const defaultProps = { habit: { name: 'test', day: 'Monday', id: '1' } };
+// TODO: change this to NULL
+const defaultProps = { activeHabitID: 'b' };
 
-// TODO: centralize fetching of habits
-// TODO: set a loading state and don't show when loading (hard to combine with above)
+// TODO: set a loading state and don't show when loading
 class TodayScreen extends Component {
-  componentDidMount() {
-    const { actionFetchHabits } = this.props;
-    actionFetchHabits();
-  }
+  componentDidMount() {}
 
   render() {
-    const { habit } = this.props;
+    const { activeHabitID } = this.props;
     return (
       <View>
-        <HabitInfo habit={habit} expanded />
+        <HabitInfoByID id={activeHabitID} expanded />
       </View>
     );
   }
 }
 
-const mapStateToPropsSelector = createStructuredSelector({ habit: activeHabit });
+const mapStateToProps = state => {
+  const activeHabitID = selectActiveHabitID(state);
+  return {
+    activeHabitID
+  };
+};
 
 export default connect(
-  mapStateToPropsSelector,
-  { actionFetchHabits: fetchHabits }
+  mapStateToProps
+  // { actionFetchHabits: fetchHabits }
 )(TodayScreen);
 
 TodayScreen.propTypes = propTypes;

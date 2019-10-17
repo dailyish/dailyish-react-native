@@ -3,30 +3,29 @@ import { Button, View } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { HabitSettings } from '../Containers';
+import { HabitSettingsByID } from '../Containers';
 import { addHabit, changeText } from '../Actions';
 
 // You wouldn't want to pass down the ID here as it will then update
 const propTypes = {
   actionAddHabit: PropTypes.func.isRequired,
   actionChangeText: PropTypes.func.isRequired,
-  name: PropTypes.string,
-  day: PropTypes.string
+  name: PropTypes.string
 };
 
-const defaultProps = { name: '', day: 'Tuesday' };
+const defaultProps = { name: '' };
 
 class HabitAddScreen extends Component {
   onAdd() {
-    const { actionAddHabit, actionChangeText, name, day } = this.props;
-    actionAddHabit({ name, day });
+    const { actionAddHabit, actionChangeText, name } = this.props;
+    actionAddHabit({ name });
     actionChangeText({ form: 'addHabitName', value: defaultProps.habitName });
   }
 
   render() {
     return (
       <View>
-        <HabitSettings reducer="add" />
+        <HabitSettingsByID reducer="add" />
         <Button title="Add Habit" onPress={() => this.onAdd()} />
       </View>
     );

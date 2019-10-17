@@ -26,8 +26,7 @@ const MainText = styled.Text`
 
 const propTypes = {
   habit: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    id: PropTypes.string.isRequired
+    name: PropTypes.string.isRequired
   }).isRequired,
   expanded: PropTypes.bool
 };

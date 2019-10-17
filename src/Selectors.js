@@ -1,1 +1,2 @@
-export { default as activeHabit } from './selectors/activeHabit';
+export { default as selectActiveHabitID } from './selectors/selectActiveHabitID';
+export { default as makeSelectHabitByID } from './selectors/makeSelectHabitByID';

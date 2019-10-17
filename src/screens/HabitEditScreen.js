@@ -3,7 +3,7 @@ import { Button, View } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import { HabitSettings } from '../Containers';
+import { HabitSettingsByID } from '../Containers';
 import { deleteHabit, updateHabit, changeText } from '../Actions';
 
 // You wouldn't want to pass down the ID here as it will then update
@@ -45,7 +45,7 @@ class HabitEditScreen extends Component {
   render() {
     return (
       <View>
-        <HabitSettings reducer="edit" />
+        <HabitSettingsByID reducer="edit" />
         <Button title="Save" onPress={() => this.onSave()} />
         <Button title="Delete" onPress={() => this.onDelete()} />
       </View>
