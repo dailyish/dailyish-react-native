@@ -23,6 +23,7 @@ class HabitAddScreen extends Component {
   }
 
   render() {
+    console.log('rendering add screen');
     return (
       <View>
         <HabitSettingsByID reducer="add" />

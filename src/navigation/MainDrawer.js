@@ -11,11 +11,13 @@ const MainView = styled.View`
 
 const drawerList = [
   {
-    page: 'Today',
+    action: 'main',
+    pageName: 'Today',
     icon: 'calendar-day'
   },
   {
-    page: 'Habits',
+    action: 'edits',
+    pageName: 'Habits',
     icon: 'calendar-day'
   }
 ];
@@ -25,11 +27,11 @@ const DrawerContent = () => {
     <MainView>
       {drawerList.map(d => (
         <DrawerItem
-          onPress={Actions[d.page]}
+          onPress={Actions[d.action]}
           icon={d.icon}
-          pageName={d.page}
-          focused={d.page === Actions.currentScene}
-          key={d.page}
+          pageName={d.pageName}
+          focused={d.pageName === Actions.currentScene}
+          key={d.pageName}
         />
       ))}
     </MainView>

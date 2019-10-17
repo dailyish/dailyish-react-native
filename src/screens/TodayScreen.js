@@ -19,7 +19,17 @@ const defaultProps = { activeHabitID: 'b' };
 
 // TODO: set a loading state and don't show when loading
 class TodayScreen extends Component {
-  componentDidMount() {}
+  componentDidMount() {
+    console.log('component mounted');
+  }
+
+  shouldComponentUpdate() {
+    console.log('component should update');
+  }
+
+  componentDidUpdate() {
+    console.log('component updated');
+  }
 
   render() {
     const { activeHabitID } = this.props;

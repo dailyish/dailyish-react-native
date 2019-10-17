@@ -19,6 +19,7 @@ class HabitsScreen extends Component {
   // }
 
   render() {
+    console.log('rendering habits screen');
     const { habitOrder } = this.props;
     const data = habitOrder.reduce((map, obj) => {
       return { ...map, [obj]: obj };

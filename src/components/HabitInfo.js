@@ -34,6 +34,7 @@ const propTypes = {
 const defaultProps = { expanded: false };
 
 const HabitInfo = props => {
+  console.log('rendering habitInfo screen');
   const { habit, expanded } = props;
   const { name } = habit;
   return (
