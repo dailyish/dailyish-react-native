@@ -18,12 +18,11 @@ const defaultProps = { name: '' };
 class HabitAddScreen extends Component {
   onAdd() {
     const { actionAddHabit, actionChangeText, name } = this.props;
-    actionAddHabit({ name });
+    actionAddHabit(name);
     actionChangeText({ form: 'addHabitName', value: defaultProps.habitName });
   }
 
   render() {
-    console.log('rendering add screen');
     return (
       <View>
         <HabitSettingsByID reducer="add" />

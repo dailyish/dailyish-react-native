@@ -1,5 +1,6 @@
 // import { Actions } from 'react-native-router-flux';
 // import { habits } from '../utils/Firebase';
+import uuid from 'uuid';
 
 // const FETCH_HABIT_SUCCESS = 'fetch_habit_success';
 const ADD_HABIT = 'add_habit';
@@ -9,15 +10,16 @@ const INITIAL_STATE = { a: { name: '1', id: 'a' }, b: { name: '2', id: 'b' } };
 
 // Reducer - must be export default function reducer
 export default function reducer(state = INITIAL_STATE, action) {
-  switch (action.type) {
+  const { type, payload } = action;
+  switch (type) {
     // case FETCH_HABIT_SUCCESS:
     //   return action.payload;
     case ADD_HABIT:
       return {
         ...state,
-        [action.payload.id]: {
-          id: action.payload.id,
-          name: action.payload.name
+        [payload.id]: {
+          id: payload.id,
+          name: payload.name
         }
       };
     default:
@@ -27,11 +29,12 @@ export default function reducer(state = INITIAL_STATE, action) {
 
 // TODO: you may want to seperate this even further by doing operations as well
 // TODO: Operations are normally 1:1 with actions but can include chained thunks
+// MAYBE: you technically might want to do uuid creation in operation
 
-export function addHabit(payload) {
+export function addHabit(name) {
   return {
     type: ADD_HABIT,
-    payload
+    payload: { name, id: uuid.v4() }
   };
 }
 
