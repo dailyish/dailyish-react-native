@@ -9,7 +9,6 @@ import store from './utils/Store';
 // TODO: Add createGlobalStyles
 // TODO: Add themes for dark mode
 // TODO: add loading={<LoadingView /> to PersistGate}
-// TODO: Change store={store}
 const App = () => {
   return (
     <Provider store={store}>

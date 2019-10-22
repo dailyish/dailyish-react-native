@@ -2,26 +2,26 @@ import React, { Component } from 'react';
 import { Button, View } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Actions } from 'react-native-router-flux';
 
 import { HabitSettingsByID } from '../Containers';
-import { changeText, createHabitObject, createHabitOrder } from '../Actions';
-import { createHabitOperation } from '../Operations';
+import { addHabitOperation, changeTextOperation } from '../Operations';
 
 // You wouldn't want to pass down the ID here as it will then update
 const propTypes = {
-  actionCreateHabitOperation: PropTypes.func.isRequired,
-  actionChangeText: PropTypes.func.isRequired,
+  opAddHabitOperation: PropTypes.func.isRequired,
+  opChangeText: PropTypes.func.isRequired,
   name: PropTypes.string
 };
 
 const defaultProps = { name: '' };
 
-// TODO: move to singular operator
 class HabitAddScreen extends Component {
   onAdd() {
-    const { actionCreateHabitOperation, actionChangeText, name } = this.props;
-    actionCreateHabitOperation(name);
-    actionChangeText({ form: 'addHabitName', value: defaultProps.habitName });
+    const { opAddHabitOperation, opChangeText, name } = this.props;
+    opAddHabitOperation(name);
+    opChangeText({ form: 'addHabitName', value: defaultProps.habitName });
+    Actions.pop();
   }
 
   render() {
@@ -48,10 +48,8 @@ const mapStateToProps = state => {
 export default connect(
   mapStateToProps,
   {
-    actionCreateHabitObject: createHabitObject,
-    actionCreateHabitOrder: createHabitOrder,
-    actionCreateHabitOperation: createHabitOperation,
-    actionChangeText: changeText
+    opAddHabitOperation: addHabitOperation,
+    opChangeText: changeTextOperation
   }
 )(HabitAddScreen);
 

@@ -1,18 +1,16 @@
-// TODO: Change this to pass ID to settings
-
 import React, { Component } from 'react';
 import { Button, View } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { HabitSettingsByID } from '../Containers';
-import { deleteHabit, updateHabit, changeText } from '../Actions';
+import { deleteHabitOperation, updateHabitNameOperation } from '../Operations';
 
 // You wouldn't want to pass down the ID here as it will then update
 const propTypes = {
   id: PropTypes.string.isRequired,
-  actionDeleteHabit: PropTypes.func.isRequired,
-  actionUpdateHabit: PropTypes.func.isRequired,
+  opDeleteHabit: PropTypes.func.isRequired,
+  opUpdateHabitName: PropTypes.func.isRequired,
   name: PropTypes.string
 };
 
@@ -26,14 +24,14 @@ class HabitEditScreen extends Component {
   }
 
   onDelete() {
-    const { actionDeleteHabit, id } = this.props;
-    actionDeleteHabit({ id });
+    const { opDeleteHabit, id } = this.props;
+    opDeleteHabit({ id });
   }
 
   onSave() {
     // change to lookup based on form name
-    const { actionUpdateHabit, name, id } = this.props;
-    actionUpdateHabit({ id, name });
+    const { opUpdateHabitName, name, id } = this.props;
+    opUpdateHabitName({ id, name });
   }
 
   render() {
@@ -62,7 +60,10 @@ const mapStateToProps = (state, ownProps) => {
 
 export default connect(
   mapStateToProps,
-  { actionChangeText: changeText, actionDeleteHabit: deleteHabit, actionUpdateHabit: updateHabit }
+  {
+    opDeleteHabit: deleteHabitOperation,
+    opUpdateHabitName: updateHabitNameOperation
+  }
 )(HabitEditScreen);
 
 HabitEditScreen.propTypes = propTypes;

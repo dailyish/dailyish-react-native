@@ -1,6 +1,3 @@
-// TODO: Work out why it is crashing on habitEdit
-// TODO: You should change habitOrder to persist in an operation and therefore into redux
-
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
@@ -8,11 +5,12 @@ import SortableListView from 'react-native-sortable-listview';
 import { Actions } from 'react-native-router-flux';
 
 import { DraggableRow } from '../Components';
-import { updateHabitOrder } from '../Actions';
+import { updateHabitOrderOperation } from '../Operations';
 
 const propTypes = {
   habitOrder: PropTypes.arrayOf(PropTypes.string).isRequired,
-  actionUpdateHabitOrder: PropTypes.func.isRequired
+  opUpdateHabitOrder: PropTypes.func.isRequired,
+  data: PropTypes.shape().isRequired
 };
 
 const defaultProps = {};
@@ -25,11 +23,10 @@ class HabitsScreen extends Component {
     // console.log(habitOrder);
   }
 
-  // TODO: Move the reordering logic to follow https://redux.js.org/recipes/structuring-reducers/immutable-update-patterns
   onChange(e) {
-    const { actionUpdateHabitOrder } = this.props;
+    const { opUpdateHabitOrder } = this.props;
     // this.forceUpdate();
-    actionUpdateHabitOrder(e);
+    opUpdateHabitOrder(e);
   }
 
   render() {
@@ -68,7 +65,7 @@ const mapStateToProps = state => {
 
 export default connect(
   mapStateToProps,
-  { actionUpdateHabitOrder: updateHabitOrder }
+  { opUpdateHabitOrder: updateHabitOrderOperation }
 )(HabitsScreen);
 
 HabitsScreen.propTypes = propTypes;

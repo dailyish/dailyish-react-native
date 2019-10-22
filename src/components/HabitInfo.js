@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
 
-// TODO: move this into it's own component
 const StyledView = styled.View`
   background-color: white;
   height: ${props => (props.expanded ? '200px' : '56px')};

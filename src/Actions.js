@@ -1,3 +1,3 @@
-export { createHabitObject, deleteHabitObject, updateHabitObject } from './redux/Habits';
-export { createHabitOrder, updateHabitOrder } from './redux/HabitOrder';
+export { addHabitToObject, updateHabitName, deleteHabitInObject } from './redux/Habits';
+export { addHabitToOrder, updateHabitOrder, deleteHabitInOrder } from './redux/HabitOrder';
 export { changeText } from './redux/Forms';

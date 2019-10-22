@@ -4,8 +4,6 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { HabitInfoByID } from '../Containers';
-// TODO: this should not be run here it should be done on startup
-// import { fetchHabits } from '../Actions';
 import { selectActiveHabitID } from '../Selectors';
 
 // You wouldn't want to pass down the ID here as it will then update
