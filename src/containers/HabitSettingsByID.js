@@ -3,12 +3,12 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { changeText } from '../Actions';
+import { changeTextOperation } from '../Operations';
 import { Input } from '../Components';
 import { makeSelectHabitByID } from '../Selectors';
 
 const propTypes = {
-  actionChangeText: PropTypes.func.isRequired,
+  opChangeText: PropTypes.func.isRequired,
   habitName: PropTypes.string,
   reducer: PropTypes.string.isRequired,
   habit: PropTypes.shape({
@@ -21,15 +21,15 @@ const defaultProps = { habitName: '', habit: null };
 
 class HabitSettingsByID extends Component {
   componentDidMount() {
-    const { actionChangeText, habit, reducer } = this.props;
+    const { opChangeText, habit, reducer } = this.props;
     if (habit) {
       const { name } = habit;
-      actionChangeText({ form: `${reducer}HabitName`, value: name });
+      opChangeText({ form: `${reducer}HabitName`, value: name });
     }
   }
 
   render() {
-    const { habitName, actionChangeText, reducer } = this.props;
+    const { habitName, opChangeText, reducer } = this.props;
     return (
       <SafeAreaView>
         <ScrollView contentInsetAdjustmentBehavior="automatic">
@@ -37,7 +37,7 @@ class HabitSettingsByID extends Component {
             label="Name"
             placeholder="Add Habit"
             value={habitName}
-            onChangeText={value => actionChangeText({ form: `${reducer}HabitName`, value })}
+            onChangeText={value => opChangeText({ form: `${reducer}HabitName`, value })}
           />
         </ScrollView>
       </SafeAreaView>
@@ -62,7 +62,7 @@ const makeMapStateToProps = () => {
 
 export default connect(
   makeMapStateToProps,
-  { actionChangeText: changeText }
+  { opChangeText: changeTextOperation }
 )(HabitSettingsByID);
 
 HabitSettingsByID.propTypes = propTypes;

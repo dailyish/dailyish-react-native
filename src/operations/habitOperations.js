@@ -1,13 +1,7 @@
 import uuid from 'uuid';
 
-import {
-  addHabitToObject,
-  addHabitToOrder,
-  updateHabitOrder,
-  updateHabitName,
-  deleteHabitInObject,
-  deleteHabitInOrder
-} from '../Actions';
+import { addHabitToObject, updateHabitName, deleteHabitInObject } from '../redux/Habits';
+import { addHabitToOrder, updateHabitOrder, deleteHabitInOrder } from '../redux/HabitOrder';
 
 export { updateHabitOrder as updateHabitOrderOperation };
 export { updateHabitName as updateHabitNameOperation };

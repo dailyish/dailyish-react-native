@@ -1,3 +1,3 @@
-import { changeText } from '../Actions';
+import { changeText } from '../redux/Forms';
 
 export { changeText as changeTextOperation };
