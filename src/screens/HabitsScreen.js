@@ -1,38 +1,55 @@
+// TODO: Work out why it is crashing on habitEdit
+// TODO: You should change habitOrder to persist in an operation and therefore into redux
+
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import SortableListView from 'react-native-sortable-listview';
+import { Actions } from 'react-native-router-flux';
 
 import { DraggableRow } from '../Components';
+import { updateHabitOrder } from '../Actions';
 
 const propTypes = {
-  habitOrder: PropTypes.arrayOf(PropTypes.string).isRequired
-  // ,actionFetchHabits: PropTypes.func.isRequired
+  habitOrder: PropTypes.arrayOf(PropTypes.string).isRequired,
+  actionUpdateHabitOrder: PropTypes.func.isRequired
 };
 
 const defaultProps = {};
 
 class HabitsScreen extends Component {
-  // componentDidMount() {
-  //   const { actionFetchHabits } = this.props;
-  //   actionFetchHabits();
-  // }
+  componentDidMount() {
+    // const { actionFetchHabits } = this.props;
+    // const { habitOrder } = this.props;
+    // actionFetchHabits();
+    // console.log(habitOrder);
+  }
+
+  // TODO: Move the reordering logic to follow https://redux.js.org/recipes/structuring-reducers/immutable-update-patterns
+  onChange(e) {
+    const { actionUpdateHabitOrder } = this.props;
+    // this.forceUpdate();
+    actionUpdateHabitOrder(e);
+  }
 
   render() {
-    const { habitOrder } = this.props;
-    const data = habitOrder.reduce((map, obj) => {
-      return { ...map, [obj]: obj };
-    }, {});
+    const { habitOrder, data } = this.props;
     return (
       <SortableListView
         style={{ flex: 1 }}
         data={data}
         order={habitOrder}
         onRowMoved={e => {
-          habitOrder.splice(e.to, 0, habitOrder.splice(e.from, 1)[0]);
-          this.forceUpdate();
+          this.onChange(e);
         }}
-        renderRow={row => <DraggableRow id={row} />}
+        renderRow={row => (
+          <DraggableRow
+            id={row}
+            onPress={() => {
+              Actions.habitEdit({ id: row });
+            }}
+          />
+        )}
       />
     );
   }
@@ -42,13 +59,16 @@ class HabitsScreen extends Component {
 const mapStateToProps = state => {
   const { habitOrder } = state;
   return {
-    habitOrder
+    habitOrder,
+    data: habitOrder.reduce((map, obj) => {
+      return { ...map, [obj]: obj };
+    }, {})
   };
 };
 
 export default connect(
-  mapStateToProps
-  // ,{ actionFetchHabits: fetchHabits }
+  mapStateToProps,
+  { actionUpdateHabitOrder: updateHabitOrder }
 )(HabitsScreen);
 
 HabitsScreen.propTypes = propTypes;

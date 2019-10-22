@@ -1,3 +1,5 @@
+// TODO: Change this to pass ID to settings
+
 import React, { Component } from 'react';
 import { Button, View } from 'react-native';
 import { connect } from 'react-redux';
@@ -8,44 +10,37 @@ import { deleteHabit, updateHabit, changeText } from '../Actions';
 
 // You wouldn't want to pass down the ID here as it will then update
 const propTypes = {
-  habit: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    id: PropTypes.string.isRequired,
-    day: PropTypes.string.isRequired
-  }).isRequired,
-  actionChangeText: PropTypes.func.isRequired,
+  id: PropTypes.string.isRequired,
   actionDeleteHabit: PropTypes.func.isRequired,
   actionUpdateHabit: PropTypes.func.isRequired,
-  name: PropTypes.string,
-  day: PropTypes.string
+  name: PropTypes.string
 };
 
-const defaultProps = { name: '', day: 'Monday' };
+const defaultProps = { name: '' };
 
 class HabitEditScreen extends Component {
   componentDidMount() {
-    const { actionChangeText, habit } = this.props;
-    const { name, day } = habit;
-    actionChangeText({ form: 'editHabitName', value: name });
-    actionChangeText({ form: 'editHabitDay', value: day });
+    // const { actionChangeText, habit } = this.props;
+    // const { name } = habit;
+    // actionChangeText({ form: 'editHabitName', value: name });
   }
 
   onDelete() {
-    const { actionDeleteHabit, habit } = this.props;
-    const { id } = habit;
+    const { actionDeleteHabit, id } = this.props;
     actionDeleteHabit({ id });
   }
 
   onSave() {
-    const { actionUpdateHabit, habit, name, day } = this.props;
-    const { id } = habit;
-    actionUpdateHabit({ id, name, day });
+    // change to lookup based on form name
+    const { actionUpdateHabit, name, id } = this.props;
+    actionUpdateHabit({ id, name });
   }
 
   render() {
+    const { id } = this.props;
     return (
       <View>
-        <HabitSettingsByID reducer="edit" />
+        <HabitSettingsByID reducer="edit" id={id} />
         <Button title="Save" onPress={() => this.onSave()} />
         <Button title="Delete" onPress={() => this.onDelete()} />
       </View>
@@ -55,11 +50,11 @@ class HabitEditScreen extends Component {
 
 // note that this converts the object into an array for mapping
 const mapStateToProps = (state, ownProps) => {
-  const { habit } = ownProps;
+  const { id } = ownProps;
   const { forms } = state;
   const { editHabitName, editHabitDay } = forms;
   return {
-    habit,
+    id,
     day: editHabitDay,
     name: editHabitName
   };

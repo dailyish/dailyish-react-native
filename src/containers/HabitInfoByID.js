@@ -10,15 +10,16 @@ const propTypes = {
   habit: PropTypes.shape({
     id: PropTypes.string,
     name: PropTypes.string
-  }).isRequired
+  }).isRequired,
+  expanded: PropTypes.bool
   // id: PropTypes.string.isRequired
 };
 
-const defaultProps = {};
+const defaultProps = { expanded: false };
 
 const HabitInfoByID = props => {
-  const { habit } = props;
-  return <HabitInfo habit={habit} />;
+  const { habit, expanded } = props;
+  return <HabitInfo habit={habit} expanded={expanded} />;
 };
 
 // note that this converts the object into an array for mapping
@@ -26,8 +27,10 @@ const HabitInfoByID = props => {
 const makeMapStateToProps = () => {
   const selectHabitByID = makeSelectHabitByID();
   const mapStateToProps = (state, ownProps) => {
+    const { id, expanded } = ownProps;
     return {
-      habit: selectHabitByID(state, ownProps.id)
+      habit: selectHabitByID(state, id),
+      expanded
     };
   };
   return mapStateToProps;

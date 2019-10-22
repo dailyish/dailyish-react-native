@@ -4,21 +4,23 @@ import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
 import { HabitSettingsByID } from '../Containers';
-import { addHabit, changeText } from '../Actions';
+import { changeText, createHabitObject, createHabitOrder } from '../Actions';
+import { createHabitOperation } from '../Operations';
 
 // You wouldn't want to pass down the ID here as it will then update
 const propTypes = {
-  actionAddHabit: PropTypes.func.isRequired,
+  actionCreateHabitOperation: PropTypes.func.isRequired,
   actionChangeText: PropTypes.func.isRequired,
   name: PropTypes.string
 };
 
 const defaultProps = { name: '' };
 
+// TODO: move to singular operator
 class HabitAddScreen extends Component {
   onAdd() {
-    const { actionAddHabit, actionChangeText, name } = this.props;
-    actionAddHabit(name);
+    const { actionCreateHabitOperation, actionChangeText, name } = this.props;
+    actionCreateHabitOperation(name);
     actionChangeText({ form: 'addHabitName', value: defaultProps.habitName });
   }
 
@@ -42,9 +44,15 @@ const mapStateToProps = state => {
   };
 };
 
+// the mapDispatchToProps function here is basically wrapping within dispatch to make sure it sends to the reducers
 export default connect(
   mapStateToProps,
-  { actionAddHabit: addHabit, actionChangeText: changeText }
+  {
+    actionCreateHabitObject: createHabitObject,
+    actionCreateHabitOrder: createHabitOrder,
+    actionCreateHabitOperation: createHabitOperation,
+    actionChangeText: changeText
+  }
 )(HabitAddScreen);
 
 HabitAddScreen.propTypes = propTypes;

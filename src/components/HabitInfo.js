@@ -1,8 +1,6 @@
 import React from 'react';
-import { TouchableWithoutFeedback } from 'react-native';
 import PropTypes from 'prop-types';
 import styled from 'styled-components';
-import { Actions } from 'react-native-router-flux';
 
 // TODO: move this into it's own component
 const StyledView = styled.View`
@@ -37,11 +35,9 @@ const HabitInfo = props => {
   const { habit, expanded } = props;
   const { name } = habit;
   return (
-    <TouchableWithoutFeedback onPress={() => !expanded && Actions.habitEdit({ habit })}>
-      <StyledView expanded={expanded}>
-        <MainText>{name}</MainText>
-      </StyledView>
-    </TouchableWithoutFeedback>
+    <StyledView expanded={expanded}>
+      <MainText>{name}</MainText>
+    </StyledView>
   );
 };
 

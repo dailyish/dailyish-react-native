@@ -1,11 +1,10 @@
 // import { Actions } from 'react-native-router-flux';
 // import { habits } from '../utils/Firebase';
-import uuid from 'uuid';
 
 // const FETCH_HABIT_SUCCESS = 'fetch_habit_success';
-const ADD_HABIT = 'add_habit';
+const CREATE_HABIT = 'create_habit';
+const DELETE_HABIT = 'delete_habit';
 
-// TODO: this should really be an object of id: {id:id, name:name} to allow for easy searching
 const INITIAL_STATE = { a: { name: '1', id: 'a' }, b: { name: '2', id: 'b' } };
 
 // Reducer - must be export default function reducer
@@ -14,7 +13,15 @@ export default function reducer(state = INITIAL_STATE, action) {
   switch (type) {
     // case FETCH_HABIT_SUCCESS:
     //   return action.payload;
-    case ADD_HABIT:
+    case CREATE_HABIT:
+      return {
+        ...state,
+        [payload.id]: {
+          id: payload.id,
+          name: payload.name
+        }
+      };
+    case DELETE_HABIT:
       return {
         ...state,
         [payload.id]: {
@@ -29,12 +36,12 @@ export default function reducer(state = INITIAL_STATE, action) {
 
 // TODO: you may want to seperate this even further by doing operations as well
 // TODO: Operations are normally 1:1 with actions but can include chained thunks
-// MAYBE: you technically might want to do uuid creation in operation
+// MAYBE: you technically might want to do uuid creation in operation to ensure consitency in firebase
 
-export function addHabit(name) {
+export function createHabitObject(name, id) {
   return {
-    type: ADD_HABIT,
-    payload: { name, id: uuid.v4() }
+    type: CREATE_HABIT,
+    payload: { name, id }
   };
 }
 
@@ -50,7 +57,7 @@ export function addHabit(name) {
 // };
 // };
 
-export const updateHabit = ({ id, name, day }) => {
+export const updateHabitObject = ({ id, name, day }) => {
   // use firebase.auth to get current user
   // return () => {
   //   habits
@@ -60,7 +67,7 @@ export const updateHabit = ({ id, name, day }) => {
   // };
 };
 
-export const deleteHabit = ({ id }) => {
+export const deleteHabitObject = ({ id }) => {
   // use firebase.auth to get current user
   // return () => {
   //   habits
