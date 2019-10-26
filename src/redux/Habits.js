@@ -3,7 +3,7 @@
 
 // const FETCH_HABIT_SUCCESS = 'fetch_habit_success';
 const ADD_HABIT_TO_OBJECT = 'add_habit_to_object';
-const DELETE_HABIT = 'delete_habit';
+const DELETE_HABIT_IN_OBJECT = 'delete_habit_in_object';
 
 const INITIAL_STATE = { a: { name: '1', id: 'a' }, b: { name: '2', id: 'b' } };
 
@@ -21,14 +21,14 @@ export default function reducer(state = INITIAL_STATE, action) {
           name: payload.name
         }
       };
-    case DELETE_HABIT:
-      return {
-        ...state,
-        [payload.id]: {
-          id: payload.id,
-          name: payload.name
+    case DELETE_HABIT_IN_OBJECT:
+      return Object.keys(state).reduce((object, key) => {
+        const newObject = object;
+        if (key !== payload.id) {
+          newObject[key] = state[key];
         }
-      };
+        return newObject;
+      }, {});
     default:
       return state;
   }
@@ -65,7 +65,7 @@ export const updateHabitName = ({ id, name, day }) => {
 
 export const deleteHabitInObject = ({ id }) => {
   return {
-    type: DELETE_HABIT,
+    type: DELETE_HABIT_IN_OBJECT,
     payload: { id }
   };
   // use firebase.auth to get current user

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Button, View } from 'react-native';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import { Actions } from 'react-native-router-flux';
 
 import { HabitSettingsByID } from '../Containers';
 import { deleteHabitOperation, updateHabitNameOperation } from '../Operations';
@@ -25,7 +26,8 @@ class HabitEditScreen extends Component {
 
   onDelete() {
     const { opDeleteHabit, id } = this.props;
-    opDeleteHabit({ id });
+    opDeleteHabit(id);
+    Actions.pop();
   }
 
   onSave() {

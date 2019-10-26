@@ -18,7 +18,7 @@ export default function reducer(state = INITIAL_STATE, action) {
       newArray.splice(payload.e.to, 0, newArray.splice(payload.e.from, 1)[0]);
       return newArray;
     case DELETE_HABIT_IN_ORDER:
-      return [...state, payload.id];
+      return state.filter(item => item !== payload.id);
     default:
       return state;
   }
