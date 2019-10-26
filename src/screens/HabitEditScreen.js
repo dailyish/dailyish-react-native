@@ -33,7 +33,8 @@ class HabitEditScreen extends Component {
   onSave() {
     // change to lookup based on form name
     const { opUpdateHabitName, name, id } = this.props;
-    opUpdateHabitName({ id, name });
+    opUpdateHabitName(id, name);
+    Actions.pop();
   }
 
   render() {
