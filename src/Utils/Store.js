@@ -10,7 +10,7 @@ import rootReducer from './Reducers';
 const persistConfig = {
   key: 'root',
   storage: FilesystemStorage,
-  blacklist: ['forms'],
+  blacklist: ['forms', 'habits', 'habitOrder'],
   stateReconciler: autoMergeLevel2
 };
 

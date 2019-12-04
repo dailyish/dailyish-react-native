@@ -1,12 +1,17 @@
 // import { Actions } from 'react-native-router-flux';
 // import { habits } from '../utils/Firebase';
+import { isToday } from '../Functions';
 
 // const FETCH_HABIT_SUCCESS = 'fetch_habit_success';
 const ADD_HABIT_TO_OBJECT = 'add_habit_to_object';
 const DELETE_HABIT_IN_OBJECT = 'delete_habit_in_object';
-const UPDATE_HABIT_IN_OBJECT = 'update_habit_in_object';
+const RENAME_HABIT_IN_OBJECT = 'rename_habit_in_object';
+const COMPLETE_HABIT_IN_OBJECT = 'complete_habit_in_object';
 
-const INITIAL_STATE = { a: { name: '1', id: 'a' }, b: { name: '2', id: 'b' } };
+const INITIAL_STATE = {
+  a: { name: '1', id: 'a', completed: [] },
+  b: { name: '2', id: 'b', completed: [] }
+};
 
 // Reducer - must be export default function reducer
 export default function reducer(state = INITIAL_STATE, action) {
@@ -19,7 +24,8 @@ export default function reducer(state = INITIAL_STATE, action) {
         ...state,
         [payload.id]: {
           id: payload.id,
-          name: payload.name
+          name: payload.name,
+          completed: []
         }
       };
     case DELETE_HABIT_IN_OBJECT:
@@ -30,12 +36,24 @@ export default function reducer(state = INITIAL_STATE, action) {
         }
         return newObject;
       }, {});
-    case UPDATE_HABIT_IN_OBJECT:
+    case RENAME_HABIT_IN_OBJECT:
       return {
         ...state,
         [payload.id]: {
           ...state[payload.id],
           name: payload.name
+        }
+      };
+    case COMPLETE_HABIT_IN_OBJECT:
+      // TODO: If habit is not checked today then add time
+      if (isToday(state[payload.id].completed[0])) {
+        return { ...state };
+      }
+      return {
+        ...state,
+        [payload.id]: {
+          ...state[payload.id],
+          completed: [Date.now(), ...state[payload.id].completed]
         }
       };
     default:
@@ -62,9 +80,9 @@ export function addHabitToObject(name, id) {
 // };
 // };
 
-export const updateHabitInObject = (id, name) => {
+export const renameHabitInObject = (id, name) => {
   return {
-    type: UPDATE_HABIT_IN_OBJECT,
+    type: RENAME_HABIT_IN_OBJECT,
     payload: { id, name }
   };
   // use firebase.auth to get current user
@@ -79,6 +97,20 @@ export const updateHabitInObject = (id, name) => {
 export const deleteHabitInObject = id => {
   return {
     type: DELETE_HABIT_IN_OBJECT,
+    payload: { id }
+  };
+  // use firebase.auth to get current user
+  // return () => {
+  //   habits
+  //     .doc(id)
+  //     .delete()
+  //     .then(Actions.pop());
+  // };
+};
+
+export const completeHabitInObject = id => {
+  return {
+    type: COMPLETE_HABIT_IN_OBJECT,
     payload: { id }
   };
   // use firebase.auth to get current user

@@ -1,10 +1,16 @@
 import uuid from 'uuid';
 
-import { addHabitToObject, updateHabitInObject, deleteHabitInObject } from '../redux/Habits';
+import {
+  addHabitToObject,
+  renameHabitInObject,
+  completeHabitInObject,
+  deleteHabitInObject
+} from '../redux/Habits';
 import { addHabitToOrder, updateHabitOrder, deleteHabitInOrder } from '../redux/HabitOrder';
 
 export { updateHabitOrder as updateHabitOrderOperation };
-export { updateHabitInObject as updateHabitNameOperation };
+export { renameHabitInObject as renameHabitOperation };
+export { completeHabitInObject as completeHabitOperation };
 
 export function addHabitOperation(name) {
   const id = uuid.v4();

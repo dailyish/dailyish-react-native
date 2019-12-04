@@ -5,7 +5,7 @@ import PropTypes from 'prop-types';
 import { Actions } from 'react-native-router-flux';
 
 import { HabitSettingsByID } from '../Containers';
-import { deleteHabitOperation, updateHabitNameOperation } from '../Operations';
+import { deleteHabitOperation, renameHabitOperation } from '../Operations';
 
 // You wouldn't want to pass down the ID here as it will then update
 const propTypes = {
@@ -65,7 +65,7 @@ export default connect(
   mapStateToProps,
   {
     opDeleteHabit: deleteHabitOperation,
-    opUpdateHabitName: updateHabitNameOperation
+    opRenameHabit: renameHabitOperation
   }
 )(HabitEditScreen);
 
